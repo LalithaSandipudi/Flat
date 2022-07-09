@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cg.ofr.dto.FlatDto;
 import com.cg.ofr.entities.Flat;
 import com.cg.ofr.exception.FlatNotFoundException;
 import com.cg.ofr.service.FlatService;
@@ -21,32 +22,30 @@ import com.cg.ofr.service.FlatService;
 public class FlatController {
 	@Autowired
 	private FlatService flatService;
-	
-	
 	@PostMapping
-	public List<Flat> addFlat(@RequestBody Flat flat) {
-		return flatService.addFlat(flat);
+	public Flat addFlat(@RequestBody FlatDto flatDto) {
+		return flatService.addFlat(flatDto);
 	}
 	
 	@PutMapping("/flatId/{newcost}")
-	public List<Flat>updateCost(@PathVariable("flatId")Integer flatId,@PathVariable("newCost")Double cost) throws FlatNotFoundException{
+	public FlatDto updateCost(@PathVariable("flatId")Integer flatId,@PathVariable("newCost")Double cost) throws FlatNotFoundException{
 		return flatService.updateFlat(flatId,cost);
 	}
 	@DeleteMapping("/flatId")
-	public List<Flat>deleteFlat(@PathVariable("flatId")Integer flatId)throws FlatNotFoundException{
+	public FlatDto deleteFlat(@PathVariable("flatId")Integer flatId)throws FlatNotFoundException{
 	
 		return flatService.deleteFlat(flatId);
 	}
 	@GetMapping("/flatId")
-	public Flat viewFlatById(@PathVariable("flatId")Integer flatId)throws FlatNotFoundException {
+	public FlatDto viewFlatById(@PathVariable("flatId")Integer flatId)throws FlatNotFoundException {
 		return flatService.viewFlat(flatId);
 	}
 	@GetMapping("/viewAllFlat")
-	public List<Flat>viewAllFlat(){
+	public List<FlatDto>viewAllFlat(){
 		return flatService.viewAllFlat();
 	}
 	@GetMapping ("/viewAllFlatByCostAndAvailability")
-	public List<Flat> findByCostAndAvailability(@PathVariable("cost")Double cost,@PathVariable("availability")String availability){
+	public List<FlatDto> findByCostAndAvailability(@PathVariable("cost")Double cost,@PathVariable("availability")String availability){
 		return flatService.findByCostAndAvailability(cost, availability);
 	}
 
